@@ -4,7 +4,8 @@ import cv2
 import numpy as np
 
 # 초기설정
-cap = cv2.VideoCapture('../img/walking.avi')
+# cap = cv2.VideoCapture('../img/walking.avi')
+cap = cv2.VideoCapture(0)
 fps = cap.get(cv2.CAP_PROP_FPS)
 delay = int(1000/fps)
 
@@ -14,7 +15,7 @@ fgbg = cv2.bgsegm.createBackgroundSubtractorMOG()
 # createBackgroundSubtractorMOG2()의 매개변수
 # history: 과거 프레임의 개수, 배경을 학습하는데 얼마나 많은 프레임을 기억할지
 # varThreshold: 픽셀이 배경인지 객체인지 구분할 기준값
-fgbg2 = cv2.createBackgroundSubtractorMOG2(500, 400, detectShadows=False)
+fgbg2 = cv2.createBackgroundSubtractorMOG2(500, detectShadows=False)
 while cap.isOpened():
     ret, frame = cap.read()
     if not ret:
