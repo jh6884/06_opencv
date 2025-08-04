@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 import glob
+import time
 
 cap = cv2.VideoCapture(0)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
@@ -35,6 +36,7 @@ while cap.isOpened():
         res = frame
         cv2.imshow(win_name, res)
     elif end_switch is True:
+        print(f'걸린 시간: {abs(curr_time - end_time)}초')
         print(f"검색이 완료되었습니다. \n추정되는 책 파일명 : ", end='')
         for i in result:
             print(i[1:], end = ', ')
@@ -42,10 +44,10 @@ while cap.isOpened():
         cv2.waitKey(0)
         break
     else:
+        curr_time = time.time()
         for path in search_path:
             img = cv2.imread(path)
             cv2.imshow('searching...', img)
-            cv2.waitKey(5)
             grayROI = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
             grayIMG = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
             kpR, descR = detector.detectAndCompute(grayROI, None) # ROI의 특징점
@@ -74,7 +76,7 @@ while cap.isOpened():
                     cv2.imshow(path[12:], img)
                     result.append(path[12:])
             end_switch = True
-
+            end_time = time.time()
     key = cv2.waitKey(1) & 0xFF
     
     if key == 27:    # Esc, 종료
