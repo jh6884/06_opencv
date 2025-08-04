@@ -13,7 +13,7 @@ MIN_MATCH = 10 # 최소 매칭점 개수
 
 # ORB 검출기 생성
 # ORB_create(1000): 이미지에서 1000개의 특징점을 찾음
-detector = cv2.ORB_create(1000)
+detector = cv2.ORB_create(1000, edgeThreshold=10, patchSize=10)
 
 # Flann 추출기 생성
 # 두 이미지의 특징점을 빠르게 매칭함
